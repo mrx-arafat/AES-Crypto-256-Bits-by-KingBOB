@@ -1,17 +1,17 @@
 
-import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
-from Crypto.Random import get_random_bytes
 import os
+import base64
 
 def aes_encrypt_cbc(plain_text, key, iv):
-    cipher = AES.new(pad(key.encode(), AES.block_size), AES.MODE_CBC, iv)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
     return cipher.encrypt(pad(plain_text.encode(), AES.block_size))
 
 # User-provided key and IV
-key = 'Your32CharacterLongSecretKeyHere'  # Replace with your 32-character key
-iv = get_random_bytes(AES.block_size)  # Random IV for CBC mode
+key = 'KingBOBKeyForAES256Encryption6X9'  # Replace with your 32-character key
+key = key.encode()  # Ensure the key is in bytes
+iv = os.urandom(AES.block_size)  # Random IV for CBC mode
 
 # Check if plain.txt exists
 if not os.path.isfile('plain.txt'):
