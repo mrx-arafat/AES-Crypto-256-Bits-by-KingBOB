@@ -1,15 +1,17 @@
 
+import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
+from Crypto.Random import get_random_bytes
 import os
 
-def aes_encrypt_cbc(plain_text, key):
-    iv = os.urandom(AES.block_size)  # Using os.urandom for IV generation
+def aes_encrypt_cbc(plain_text, key, iv):
     cipher = AES.new(pad(key.encode(), AES.block_size), AES.MODE_CBC, iv)
-    return iv + cipher.encrypt(pad(plain_text.encode(), AES.block_size))
+    return cipher.encrypt(pad(plain_text.encode(), AES.block_size))
 
-# My key
-key = 'KingBOB'  # This should be 16, 24, or 32 bytes long for AES-128, AES-192, or AES-256
+# User-provided key and IV
+key = 'Your32CharacterLongSecretKeyHere'  # Replace with your 32-character key
+iv = get_random_bytes(AES.block_size)  # Random IV for CBC mode
 
 # Check if plain.txt exists
 if not os.path.isfile('plain.txt'):
@@ -20,8 +22,11 @@ else:
         plain_text = plain_file.read()
 
     # Encrypt the text
-    encrypted_text = aes_encrypt_cbc(plain_text, key)
+    encrypted_text = aes_encrypt_cbc(plain_text, key, iv)
+
+    # Base64 encode the result (IV + encrypted text)
+    encrypted_text_b64 = base64.b64encode(iv + encrypted_text)
 
     # Write the encrypted text to 'encrypted.txt'
     with open('encrypted.txt', 'wb') as encrypted_file:
-        encrypted_file.write(encrypted_text)
+        encrypted_file.write(encrypted_text_b64)
