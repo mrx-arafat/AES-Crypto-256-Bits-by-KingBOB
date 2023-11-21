@@ -22,9 +22,8 @@ The CBC mode of operation enhances the security of the encryption process by XOR
 
 ## Usage
 
-1. **Encryption**: Place your plaintext in `plain.txt` and run `full_aes_encrypt.py`. The script will generate an `encrypted.txt` file, which contains the Base64 encoded ciphertext.
-
-2. **Decryption**: Run `full_aes_decrypt.py` to decrypt the content of `encrypted.txt`. The decrypted text will be saved in `output.txt`.
+1. **Encryption**: Place your plaintext in `plain.txt` and run `encrypt.py`. The script will generate an `encrypted.txt` file, which contains the Base64 encoded ciphertext.
+2. **Decryption**: Run `decrypt.py` to decrypt the content of `encrypted.txt`. The decrypted text will be saved in `output.txt`.
 
 ## Key and IV Handling
 
@@ -47,3 +46,4 @@ Ensure you have Python 3 and the PyCryptodome library installed. You can install
 
 ```bash
 pip install pycryptodome
+```
